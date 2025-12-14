@@ -22,6 +22,7 @@ public:
             // take from left
             if (balance[l] > 0) {
                 long long take = min((long long)balance[l], req);
+                balance[l]=0;
                 int d = min(abs(ind - l), n - abs(ind - l));
                 ans += take * d;
                 req -= take;
@@ -31,6 +32,7 @@ public:
             // take from right
             if (req > 0 && balance[r] > 0) {
                 long long take = min((long long)balance[r], req);
+                balance[r]=0;
                 int d = min(abs(ind - r), n - abs(ind - r));
                 ans += take * d;
                 req -= take;
