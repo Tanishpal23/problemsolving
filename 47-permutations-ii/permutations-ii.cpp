@@ -1,29 +1,26 @@
 class Solution {
 public:
-    set<vector<int>> stt1;
     vector<vector<int>> ans;
 
-    void findPermuUsingSwap(int i, int n, vector<int>& nums){
-        if(i==n){
-            if(stt1.find(nums)==stt1.end()){
-                ans.push_back(nums);
-            }
-            stt1.insert(nums);
+    void solve(int i, vector<int>& nums) {
+        if (i == nums.size()) {
+            ans.push_back(nums);
             return;
         }
 
-        for(int ind = i; ind<n; ind++){
-            swap(nums[i], nums[ind]);
-            findPermuUsingSwap(i+1, n, nums);
-            swap(nums[i], nums[ind]);
-        }
+        unordered_set<int> used;
+        for (int j = i; j < nums.size(); j++) {
+            if (used.count(nums[j])) continue;
+            used.insert(nums[j]);
 
-        return;
+            swap(nums[i], nums[j]);
+            solve(i + 1, nums);
+            swap(nums[i], nums[j]);
+        }
     }
 
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-        int n = nums.size();
-        findPermuUsingSwap(0, n, nums);
+        solve(0, nums);
         return ans;
     }
 };
