@@ -1,38 +1,35 @@
 // Approach
-// 1. for each index pre compute no of 'N' from starting to that index
-// 2. for each index pre compute no of 'Y' from that index to end
-// 3. calculate penalty using the submission of both, take minimum.
+// 1. Calculate penalty taking shop always closed. (total no of Y)
+// 2. Move from left to right and calculate (new) penalty for every index.
+// 3. If penalty becomes lesser than minpenalty. Update minpenalty and ans index.
 
-//TC - O(n)+O(n)+O(n) = O(n)
-//SC - O(n)+O(n) = O(n)
+// TC - O(n)+O(n) = O(n)
+// SC - O(1);
 
 class Solution {
 public:
     int bestClosingTime(string customers) {
         int n = customers.size();
 
-        vector<int> preN(n + 1, 0); // N from start to i
-        vector<int> sufY(n + 1, 0); // Y from i to end
-
-        // prefix count of 'N'
-        for (int i = 0; i < n; i++) {
-            preN[i + 1] = preN[i] + (customers[i] == 'N');
+        //Calculating total no of Y -> penalty if shop never opens
+        int penalty = 0;
+        for(auto i: customers){
+            if(i=='Y') penalty++;
         }
 
-        // suffix count of 'Y'
-        for (int i = n - 1; i >= 0; i--) {
-            sufY[i] = sufY[i + 1] + (customers[i] == 'Y');
-        }
-
+        //minpenalty for updating ans index
+        int minpenalty = penalty;
         int ans = 0;
-        int minPenalty = INT_MAX;
 
-        // calculate penalty for each closing time
-        for (int i = 0; i <= n; i++) {
-            int penalty = preN[i] + sufY[i];
-            if (penalty < minPenalty) {
-                minPenalty = penalty;
-                ans = i;
+        //moving from left to right -> if 'Y' penalty reduce by 1, if 'N' penalty increase by 1
+        //if penalty becomes lesser than minpenalty ... ans update.
+        for(int i=0; i<n; i++){
+            if(customers[i]=='Y') penalty--;
+            else penalty++;
+
+            if(penalty < minpenalty){
+                minpenalty = penalty;
+                ans = i+1;
             }
         }
 
