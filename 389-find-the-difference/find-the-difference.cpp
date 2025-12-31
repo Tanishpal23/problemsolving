@@ -1,18 +1,17 @@
+// Approach
+// Take all XOR, as one element only once. XOR->ans
+
 class Solution {
 public:
     char findTheDifference(string s, string t) {
-
-        int n = s.size();
-
-        int st = 0;
-        int ss = 0;
-
-        for(int i=0; i<n; i++){
-            st+=(t[i]);
-            ss+=(s[i]);
+        int ans = 0;
+        for(char c: s){
+            ans^=(c);
         }
-        st+=t[n];
+        for(char c: t){
+            ans^=(c);
+        }
 
-        return (char)(st-ss);
+        return (char)(ans);
     }
 };
