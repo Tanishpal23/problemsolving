@@ -1,3 +1,11 @@
+//Approach
+//sieve
+
+//Error -> only check for i*i<n, i checked for i<n -> integer overflow for i*i
+
+//TC - O(n log log (n))
+//SC - O(n)
+
 class Solution {
 public:
 
