@@ -6,7 +6,7 @@ public:
 
         for(auto num: nums){
             mpp[num]++;
-            if(mpp[num]==n/2) return num;
+            if(mpp[num]==2) return num;
         }
 
         return -1;
