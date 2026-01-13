@@ -1,71 +1,44 @@
 // Approach
-// Hard Coded
-
-// TC - O(n*m)
-// SC - O(1)
-
-// Observation
-// Total no of dia = n+m-1
-// Upper Dia -> i-1, j+1
-// Lower Dia -> i+1, j-1
-// i = ??
-// j = ??
-
+// At every position where to go.
+// for even i+j -> go upper right.
+// for odd i+j -> go lower left.
 
 class Solution {
-
-    vector<int> ans;
-    int n, m;
-    
-    // Upper Dia
-    void findLowerDia(int i, int j, vector<vector<int>>& mat){
-        
-        while( i>=0 && i<n && j>=0 && j<m ){
-            ans.push_back( mat[i][j] );
-            i += 1;
-            j -= 1;
-        }
-
-        return;
-    }
-    
-    // Lower Dia
-    void findUpperDia(int i, int j, vector<vector<int>>& mat){
-        
-        while( i>=0 && i<n && j>=0 && j<m ){
-            ans.push_back( mat[i][j] );
-            i -= 1;
-            j += 1;
-        }
-
-        return;
-    }
 public:
     vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
+        int n = (int)mat.size();
+        int m = (int)mat[0].size();
 
-        n = (int)mat.size();
-        m = (int)mat[0].size();
+        vector<int> ans;
+        int row = 0;
+        int col = 0;
 
-        int i=0, j=0;
+        for( int cnt=0; cnt < n*m; cnt++ ){
+            
+            ans.push_back( mat[row][col] );
 
-        // Total no of diagonals
-        for(int ind = 0; ind<n+m-1; ind++){
-
-            if(ind & 1){
-                // odd diagonal → down-left → start from top-most
-                i = max(0, ind - (m - 1));
-                j = ind - i;
-                findLowerDia(i, j, mat);
-            } else {
-                // even diagonal → up-right → start from bottom-most
-                i = min(n - 1, ind);
-                j = ind - i;
-                findUpperDia(i, j, mat);
+            //important condition
+            if((row + col) % 2 == 0){
+                // up-right
+                if(col == m - 1) row++;
+                else if(row == 0) col++;
+                else{
+                    row--;
+                    col++;
+                }
+            }
+            else{
+                // down-left
+                if(row == n - 1) col++;
+                else if(col == 0) row++;
+                else{
+                    row++;
+                    col--;
+                }
             }
 
         }
 
-        //ans
         return ans;
     }
 };
