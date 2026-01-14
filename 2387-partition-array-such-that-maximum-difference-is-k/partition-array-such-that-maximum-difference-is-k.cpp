@@ -9,7 +9,6 @@ public:
         for(int i=0; i<n; i++){
 
             int maxVal = nums[i] + k;
-            cout << maxVal;
 
             int j = i;
             while( j<n && nums[j] <= maxVal  ){
