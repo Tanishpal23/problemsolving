@@ -1,4 +1,6 @@
 class Solution {
+
+    using pii = pair<int, int>;
 public:
     vector<int> getStrongest(vector<int>& arr, int k) {
 
@@ -6,18 +8,25 @@ public:
         sort(arr.begin(), arr.end());
 
         int m = arr[(n-1)/2];
-        vector<pair<int,int>> temp;
+        priority_queue<pii, vector<pii>, greater<pii>> pq;
 
         for(auto num: arr){
-            temp.push_back({abs(num-m), num});
+            int dif = abs(num-m);
+
+            if(pq.size() < k){
+                pq.push( {dif, num} );
+            }else if(pq.top().first <= dif){
+                pq.pop();
+                pq.push( {dif, num} );
+            }
+
         }
-        
-        sort(temp.rbegin(), temp.rend());
 
         vector<int> ans;
         for(int i=0; i<k; i++){
-            if( i < n ){
-                ans.push_back(temp[i].second);
+            if( !pq.empty() ){
+                ans.push_back(pq.top().second);
+                pq.pop();
             }else break;
         }
 
