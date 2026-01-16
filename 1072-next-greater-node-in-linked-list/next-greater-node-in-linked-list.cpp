@@ -23,8 +23,6 @@ class Solution {
             prev = curr;
             curr = temp;
             n++;
-
-            cout << n << "  " << endl;
         }
 
         return prev;
@@ -48,7 +46,7 @@ public:
             while( !st.empty() && currVal >= st.top() ) st.pop();
 
             if( !st.empty() ) ans[n-i-1] = st.top();
-            
+
             st.push( currVal );
             curr = curr->next;
         }
