@@ -1,34 +1,19 @@
-// Approach
-// Mark curr element's index -curr element -> if element = 5, marks nums[4] = -nums[4]
-// Now if curr element is already negative that means someone else is present before 
-// hence repeating.
-
-// TC O(n)
-// SC O(1)
-
 class Solution {
 public:
     vector<int> findDuplicates(vector<int>& nums) {
+        int sz = nums.size();
 
         vector<int> ans;
-        int n = nums.size();
+        unordered_set<int> stt;
 
-        for(auto num: nums){
+        for( int i=0; i<sz; i++){
 
-            //index that needs to make negative
-            int ind = abs(num) - 1;
-
-            //if already negative -> present before
-            if( nums[ind] < 0 ){
-                ans.push_back(abs(num));
+            if( stt.find( nums[i] ) != stt.end() ){
+                ans.push_back( nums[i] );
             }
-            //else make it negative
-            else{
-                nums[ind] = -nums[ind];
-            }
+            stt.insert(nums[i]);
         }
 
-        //return ans
         return ans;
     }
 };
