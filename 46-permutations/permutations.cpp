@@ -1,24 +1,28 @@
 class Solution {
 public:
 
+    int n;
     vector<vector<int>> ans;
 
-    void findPermuUsingSwap(int i, int n, vector<int>& nums){
-        if(i==n){
-            ans.push_back(nums);
+    void findPermutation( vector<int>& nums, int ind ){
+
+        if( ind == n ){
+            ans.push_back( nums );
             return;
         }
-
-        for(int ind = i; ind<n; ind++){
-            swap(nums[i], nums[ind]);
-            findPermuUsingSwap(i+1, n, nums);
-            swap(nums[i], nums[ind]);
+        for( int i=ind; i<n; i++ ){
+            swap( nums[ind], nums[i] );
+            findPermutation( nums, ind + 1 );
+            swap( nums[ind], nums[i] );
         }
+
+        return;
+
     }
     vector<vector<int>> permute(vector<int>& nums) {
-        
-        findPermuUsingSwap(0, nums.size(), nums);
+        n = nums.size();
 
+        findPermutation( nums, 0 );
         return ans;
     }
 };
